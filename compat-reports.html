@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Say which parts did not survive the export</title>
+<meta name="description" content="A portable effect format has to be honest about what each backend cannot do, or portability is a lie you find out about late.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>Say which parts did not survive the export</h1>
+<p class="lede">Any tool that targets two renderers will eventually hit something one of them cannot do. What matters is whether it tells you.</p>
+
+<p>I lost most of an afternoon to this once. An effect used a per-particle velocity module, looked right in the editor, and rendered subtly wrong in the 2D backend &mdash; not broken, just flat. Nothing errored. The module was silently unsupported on that path, so it was skipped, and the result was plausible enough that I assumed I had mis-tuned it and kept adjusting the wrong numbers.</p>
+
+<h2>Silent degradation is the worst failure mode</h2>
+<p>Loud failure is fine: you see it, you fix it. Correct output is fine. The expensive case is output that is <em>almost</em> right, because you spend your time debugging your own judgment instead of the tool.</p>
+
+<p>So the property I now look for is not "supports everything on every backend" &mdash; nobody can promise that &mdash; but a machine-readable report of what was supported, partially supported, or dropped, produced at export time. Three things follow from that:</p>
+<ul>
+<li>You can <strong>fail a build</strong> when an effect uses something its target backend does not implement. That turns a visual bug into a CI error.</li>
+<li>You can <strong>diff the report</strong> across versions and notice the day an upgrade quietly changed support.</li>
+<li>An <strong>agent can read it</strong>, which means the fix loop can be automated instead of requiring someone to eyeball two renders side by side.</li>
+</ul>
+
+<h2>The workaround worth knowing</h2>
+<p>When a module genuinely is not available on your target, the fix is usually to express the same motion with a primitive that is. Buoyancy via a negative gravity force instead of a velocity-over-lifetime curve, for instance &mdash; less expressive, identical on screen, and portable. You only find these substitutions if the tool told you what was dropped.</p>
+
+<h2>The general version</h2>
+<p>This is really a documentation-honesty test. A tool that publishes its per-backend support matrix is telling you it expects you to hit the edges. One that markets seamless portability without a compatibility report has moved the discovery of those edges from build time to ship time.</p>
+
+<p><a href="https://nixiefx.com/vfx-runtime-docs/">The runtime reference</a> covers the module and backend matrix, which is the document you want open while authoring anything cross-renderer.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>

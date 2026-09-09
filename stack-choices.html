@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Picking a stack you can still change in a year</title>
+<meta name="description" content="Arguments about engines are usually arguments about iteration speed wearing a costume.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>Picking a stack you can still change in a year</h1>
+<p class="lede">The question is not which stack is most capable. Almost all of them are capable enough. It is which one you can still change your mind inside of.</p>
+
+<p>Engine debates get heated because people are comparing feature lists, and feature lists do not differ that much for the kind of game most small teams actually ship. What differs enormously is how long it takes to go from "let's try it" to seeing it on a real phone.</p>
+
+<h2>The things that actually cost you a year</h2>
+<ul>
+<li><strong>Build and deploy time.</strong> If shipping a change to a test device takes twenty minutes, you will make fewer changes. Not "you should be more disciplined" &mdash; you will simply make fewer of them, and the game will be worse in a way nobody can point at.</li>
+<li><strong>How many people can make a change.</strong> A stack only your engineers can touch has a throughput ceiling equal to your engineers' spare time. Widening that is worth more than any rendering feature.</li>
+<li><strong>Whether updates need a store review.</strong> The difference between fixing a live balance problem in an hour and in three days changes what you are willing to try.</li>
+<li><strong>Whether the tooling is legible to an agent.</strong> Newly decisive, and it comes down to plain text and documented schemas rather than anything clever.</li>
+</ul>
+
+<h2>Where the web genuinely wins, and where it does not</h2>
+<p>Honestly: instant deploys, no store gate on updates, one language across client and tooling, and everything is text an agent can read. Those are real and they compound.</p>
+
+<p>Equally honestly: you give up the mature native profiling tools, some platform integrations are fiddlier, and you inherit the whole browser performance discipline &mdash; which is a real tax, not a footnote. If your game is GPU-bound and 3D-heavy, the calculus is different and I would not pretend otherwise.</p>
+
+<p>For a 2D-heavy free-to-play game with a lot of UI and frequent content updates, though, the iteration properties dominate, and that is most of the mobile market.</p>
+
+<h2>The test</h2>
+<p>Time one change end to end &mdash; idea to running on a real phone in someone else's hands. Whatever that number is, it is your actual iteration speed, and it predicts your next year better than any comparison table.</p>
+
+<p><a href="https://nixiefx.com/mobile-game-stack/">This breakdown of a web-native F2P stack</a> is a useful concrete version of the argument, layer by layer.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>

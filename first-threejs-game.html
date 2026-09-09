@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The sixty lines nobody shows you</title>
+<meta name="description" content="Every Three.js tutorial starts at the same place and stops before the part that makes a game feel like one.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>The sixty lines nobody shows you</h1>
+<p class="lede">The skeleton of a 3D web game is genuinely small. What makes first attempts feel wrong is not the missing thousand lines, it is four specific decisions in the first sixty.</p>
+
+<p>Renderer, scene, camera, loop, input. That really is the whole frame, and you can have something on screen in an afternoon. Then it feels stiff and cheap and you cannot say why. In my experience it is almost always these four.</p>
+
+<h2>The four that decide how it feels</h2>
+<ul>
+<li><strong>Cap the pixel ratio.</strong> Uncapped <code>devicePixelRatio</code> on a modern phone means rendering three or four times the pixels you need, and the whole game runs at half rate for no visible gain. Clamp it to about 2. This is the single highest-impact line in the file.</li>
+<li><strong>Drive everything from delta time.</strong> If movement is per-frame rather than per-second, your game is literally faster on better hardware. Easy to get away with on one machine and impossible to retrofit later, because by then every constant is tuned to your frame rate.</li>
+<li><strong>Use pointer events, not mouse events.</strong> One code path for touch and mouse. Writing mouse handlers first and "adding touch later" means writing input twice and shipping the phone version worse.</li>
+<li><strong>Put something juicy on the primary action.</strong> A tap that produces geometry moving and nothing else reads as a prototype no matter how clean the code is. One burst effect changes the perceived quality more than any amount of refactoring.</li>
+</ul>
+
+<h2>Why the last one gets skipped</h2>
+<p>Because it is the only one of the four that is not code you can copy from a tutorial. Renderer setup is boilerplate. A particle effect is a design decision that has to be authored, and if authoring means hand-writing constants and reloading, you will do it once, get something mediocre, and move on.</p>
+
+<p>That is a tooling problem masquerading as a polish problem. Author the effect somewhere you can iterate in seconds, export it as data, and load it like any other asset &mdash; then the juice is a thirty-second change instead of an afternoon.</p>
+
+<h2>What I would build first</h2>
+<p>Ground plane, one player object, tap to move, one burst on arrival. That is a complete loop, it exercises all four decisions above, and it is small enough that you will actually finish it. Everything after that is content.</p>
+
+<p><a href="https://nixiefx.com/threejs-game-tutorial/">This walkthrough</a> builds exactly that skeleton mobile-first and, unusually, does not stop before the particle effect.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>

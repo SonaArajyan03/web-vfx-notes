@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Give the agent a schema, not an API</title>
+<meta name="description" content="Coding agents are bad at visual work for a specific reason. Changing what you hand them fixes more than prompting does.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>Give the agent a schema, not an API</h1>
+<p class="lede">&ldquo;Make the explosion punchier&rdquo; has no executable meaning. That single fact explains most of why agents are unhelpful at VFX.</p>
+
+<p>Hand an agent a rendering API and ask for a better effect and you get confident, plausible, wrong code: parameters invented, magic numbers that do nothing, a system rebuilt from scratch because reading the existing one was harder than replacing it. Not because the model is weak, but because there is no feedback signal. It cannot see the result, and nothing it writes fails loudly when the look is off.</p>
+
+<h2>What changes the outcome</h2>
+<p>Give it <strong>data with a schema</strong> instead of <strong>code with an API</strong>. Three things become true at once:</p>
+<ul>
+<li><strong>The space of valid edits is enumerable.</strong> A schema says the fields, their types, their ranges. The agent is picking values inside a known space rather than inventing structure, which is the thing it is worst at.</li>
+<li><strong>There is a checker.</strong> A validator that exits non-zero converts &ldquo;does this look right&rdquo; into a command. The agent can iterate against it without a human in the loop for every attempt.</li>
+<li><strong>The diff is reviewable.</strong> <code>startSize: 0.4 -&gt; 0.9</code> is something a human can approve in two seconds. A rewritten emitter class is not.</li>
+</ul>
+
+<h2>The split that actually works</h2>
+<p>Agent does the mechanical half: scaffold a variant, adjust timings across twelve effects, validate the project, export the bundle. Human does the judgment half: is this the feel we want. That split works because it matches what each side is genuinely good at, rather than hoping the agent develops taste.</p>
+
+<p>What does not work is asking for taste and then being disappointed. &ldquo;Punchier&rdquo; needs to become &ldquo;shorter lifetime, higher initial velocity, faster falloff&rdquo; before it is a task &mdash; and deciding that is the human's job, not a prompting failure.</p>
+
+<h2>The unglamorous prerequisite</h2>
+<p>None of this works if your effects live in a binary blob or behind a GUI. Delegability is decided by your storage format, well before anyone writes a prompt. That is the least exciting sentence here and the one that determines the outcome.</p>
+
+<p><a href="https://nixiefx.com/skills/">These agent skills</a> are a concrete take on the same split &mdash; one for authoring effects, one for wiring them into a renderer, both operating on files rather than driving a UI.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>
