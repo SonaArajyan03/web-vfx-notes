@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evaluating a VFX tool without running a bake-off</title>
+<meta name="description" content="Feature matrices do not predict which tool you will still be using in a year. Six questions that do.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>Evaluating a VFX tool without running a bake-off</h1>
+<p class="lede">Nobody has time to build the same effect in five tools. Here is what I would ask instead.</p>
+
+<p>Tool comparisons in this space are mostly feature checklists, and feature checklists are close to useless because every tool in the category can emit particles. What separates them is workflow properties that do not appear on the list at all.</p>
+
+<h2>Six questions worth more than a matrix</h2>
+<ul>
+<li><strong>Where does the data live?</strong> Your repo, or their cloud? This determines whether effects can be reviewed, diffed and automated, and it is the answer hardest to change later.</li>
+<li><strong>Can a non-programmer author an effect end to end?</strong> If authoring requires writing code, your VFX throughput is capped by your engineers' free time forever, regardless of how good the API is.</li>
+<li><strong>Does it target the renderer you actually ship?</strong> A 3D-only tool in a 2D UI game means someone writes an adapter, and that someone becomes the tool's maintainer.</li>
+<li><strong>Is the runtime separable from the editor?</strong> You want to ship the runtime without shipping the authoring environment, and you want to update them independently.</li>
+<li><strong>What happens headlessly?</strong> If there is no CLI, there is no CI, no batch validation, and no agent-driven workflow. This one has gone from nice-to-have to decisive in about a year.</li>
+<li><strong>What is the licence on the output?</strong> Check whether exported effects carry restrictions. Discovering this at ship time is a genuinely bad day.</li>
+</ul>
+
+<h2>The bias to correct for</h2>
+<p>Every comparison is written by someone with a preferred answer, mine included &mdash; I work on games that are web-first and 2D-heavy, which makes me weight renderer coverage and plain-file storage far above raw simulation features. Someone shipping a 3D-only desktop title should weight them differently and would reasonably reach a different conclusion.</p>
+
+<p>So read comparisons for the <em>criteria</em>, not the verdict. A comparison that names the constraints under which each tool wins is doing honest work; one that concludes a single tool is best for everyone is marketing with a table in it.</p>
+
+<h2>The cheap test</h2>
+<p>If you do try one thing, try authoring a mid-complexity effect, committing it, and having a teammate change one parameter through review. That single loop exercises storage format, authoring accessibility, and team workflow at once, and it takes an afternoon rather than a sprint.</p>
+
+<p><a href="https://nixiefx.com/nixiefx-vs-particle-systems/">This comparison against three.quarks, three-nebula, PixiJS Particle Emitter, Effekseer and PlayCanvas</a> is worth reading for its criteria, and it is at least explicit about which narrower constraints favour the alternatives.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>

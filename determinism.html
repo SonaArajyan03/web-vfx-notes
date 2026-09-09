@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Determinism is worth more than it sounds</title>
+<meta name="description" content="Same effect, same seed, same motion, every machine. Why that property matters far outside of replay systems.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>Determinism is worth more than it sounds</h1>
+<p class="lede">&ldquo;Deterministic simulation&rdquo; reads like a checkbox for netcode people. It is quietly the difference between a VFX system you can test and one you cannot.</p>
+
+<p>A deterministic particle system means that given the same effect definition and the same seed, you get identical motion &mdash; on your laptop, on CI, on a reviewer's phone, on both render backends. Sounds narrow. It is not.</p>
+
+<h2>What it actually buys you</h2>
+<ul>
+<li><strong>Screenshot tests become possible.</strong> If the sim is deterministic and you step it by a fixed timestep to a fixed time, the output is a stable image. You can diff it. Non-deterministic effects can only be eyeballed, which means in practice they are never regression-tested at all.</li>
+<li><strong>Bug reports become reproducible.</strong> &ldquo;The explosion looks wrong&rdquo; plus a seed is an actionable report. Without a seed it is a conversation.</li>
+<li><strong>Review stops needing a meeting.</strong> A reviewer can produce the exact frame the author saw, rather than a similar one, which removes the entire class of &ldquo;works on my machine&rdquo; disagreement about something visual.</li>
+<li><strong>Backends stay honest.</strong> If the same effect drifts between your 2D and 3D render paths, determinism is what makes that visible as a failure instead of as a vibe.</li>
+</ul>
+
+<h2>The part that surprised me</h2>
+<p>Determinism also constrains the tool in a useful direction: it forces the timestep to be an explicit input rather than something read from a wall clock deep inside the runtime. Once <code>update(deltaSeconds)</code> is the only way time advances, you can step at 1/60 in a headless capture, run at real time in the game, and slow-motion for debugging, with no special modes. The API gets smaller and more capable at once, which is rare.</p>
+
+<h2>What it does not give you</h2>
+<p>It is not floating-point determinism across architectures in the strict lockstep-netcode sense, and you should not build rollback on top of a visual-effects runtime on that assumption. The guarantee that matters here is reproducibility for authoring, testing and review &mdash; which is the one you use daily.</p>
+
+<p>If you want the concrete shape of this, <a href="https://nixiefx.com/threejs-runtime/">the Three.js runtime reference</a> documents the seeded <code>createEffect</code> plus explicit-delta update model, which is the cleanest version of it I have used.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>

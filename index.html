@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notes on web game VFX</title>
+<meta name="description" content="Working notes on particle effects for HTML5 games: frame budgets and garbage collection, deterministic simulation, plain-JSON effect data, UI juice, and choosing an authoring workflow.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>Why these notes exist</h1>
+<p class="lede">Visual effects are the part of a web game that everyone agrees matters and nobody owns. These are notes from working on that gap.</p>
+
+<p>I keep running into the same three arguments: that a stutter is a rendering cost when it is almost always an allocation, that effect authoring is a craft problem when it is usually a queue problem, and that the file format is an implementation detail when it decides whether any of this can be reviewed.</p>
+
+<p>These pages are the short versions. Where somebody else has written the idea up properly, I link out instead of restating it.</p>
+
+<h2>Pages</h2>
+<nav class="idx">
+<a href="gc-frames.html">The frame you dropped was the garbage collector
+<span>Why web games stutter, the allocation rules that fix it, and the dishonest fix to avoid.</span></a>
+<a href="determinism.html">Determinism is worth more than it sounds
+<span>Same effect, same seed, same motion. What that unlocks outside of netcode.</span></a>
+<a href="json-effects.html">Keep effect data as plain JSON in your repo
+<span>Binary project formats make VFX unreviewable, undiffable and undelegatable.</span></a>
+<a href="ui-juice.html">UI juice is a retention feature, not a polish task
+<span>The three places feedback earns its cost, and the timing mistake that makes it feel slower.</span></a>
+<a href="who-authors.html">Who authors the effect matters more than which tool
+<span>Three ways the VFX queue stays one person wide, and what actually widens it.</span></a>
+<a href="picking-a-tool.html">Evaluating a VFX tool without running a bake-off
+<span>Six questions that predict what you will still be using in a year.</span></a>
+</nav>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>

@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Keep effect data as plain JSON in your repo</title>
+<meta name="description" content="Binary project formats make VFX invisible to review, diffing and automation. The case for boring files.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>Keep effect data as plain JSON in your repo</h1>
+<p class="lede">The format your effects are stored in decides whether they can be reviewed, and almost nobody picks it deliberately.</p>
+
+<p>Most visual authoring tools save to a proprietary binary blob, or worse, to a cloud project you access through a web app. It feels irrelevant while you are authoring. It becomes very relevant the first time someone asks &ldquo;what changed in this effect?&rdquo; and the honest answer is &ldquo;nobody can tell&rdquo;.</p>
+
+<h2>What plain files give you</h2>
+<ul>
+<li><strong>A reviewable diff.</strong> A pull request that says <code>lifetime: 0.6 -&gt; 1.4</code> is a conversation. A pull request that says <code>Binary file changed</code> is a rubber stamp.</li>
+<li><strong>Real version history.</strong> You can bisect a visual regression the same way you bisect any other one. With a binary blob you can only restore wholesale.</li>
+<li><strong>Automation without an API.</strong> If effects are JSON, a script can validate them, batch-edit them, lint them for expensive settings, or generate variants. None of that needs the tool's cooperation.</li>
+<li><strong>No hostage situation.</strong> Your effects live in your repository. If the tool disappears, changes pricing, or moves to a cloud-only model, you still have the data and the schema.</li>
+</ul>
+
+<h2>The agent angle, which is new</h2>
+<p>This one changed my mind about how much the format matters. Plain JSON with a documented schema means a coding agent can create and modify effects directly &mdash; no GUI, no screen-reading, no browser automation. It reads the schema, writes the file, runs a validator, exports. That loop works headlessly and it is checkable at every step.</p>
+
+<p>You cannot do that with a binary format at all, and you can only barely do it with a web app, via exactly the kind of brittle UI automation everyone regrets. The choice of storage format quietly decides whether half your VFX work can be delegated.</p>
+
+<h2>The honest cost</h2>
+<p>JSON project files get verbose, and a large effect graph is not pleasant to read raw. That is fine &mdash; you are not meant to read it raw, you are meant to be <em>able</em> to. And a noisy diff still beats no diff.</p>
+
+<p>The pattern worth copying is create, edit, validate, export as four separate steps with a non-zero exit on failure &mdash; <a href="https://nixiefx.com/cli-reference/">this CLI reference</a> is a good concrete example of that loop, including the read-only validate pass, which is the step people leave out.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>

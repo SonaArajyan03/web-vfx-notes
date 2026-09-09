@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UI juice is a retention feature, not a polish task</title>
+<meta name="description" content="The particles on your reward button are doing more work than the button. Where to spend the effort.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>UI juice is a retention feature, not a polish task</h1>
+<p class="lede">Feedback on a button press is the cheapest game feel available and the first thing cut when a deadline moves.</p>
+
+<p>A functional UI tells a player what happened. A juicy one makes them want to do it again. That gap is worth actual retention, and it is produced by a handful of very small effects: a burst on press, a coin fountain on reward, a soft glow on something newly available.</p>
+
+<p>These are not big pieces of work. They get skipped because they are filed under polish, and polish is what a schedule eats first.</p>
+
+<h2>Where the juice actually pays</h2>
+<p>Not everywhere. Applied uniformly, particle feedback becomes visual noise and slows the interface down. The three places I think earn it:</p>
+<ul>
+<li><strong>The moment of reward.</strong> Whatever the player just earned should arrive with weight. This is the single highest-value effect in most games and it is often just a coin fountain with decent timing.</li>
+<li><strong>The action you want repeated.</strong> The claim, the upgrade, the roll. Feedback here is teaching, not decoration &mdash; it marks the loop.</li>
+<li><strong>State becoming available.</strong> A subtle effect on a thing that just became actionable outperforms a badge, because it draws the eye without adding a thing to read.</li>
+</ul>
+
+<p>Everything else &mdash; navigation, settings, back buttons &mdash; should be quiet. Juice on a back button is just latency with sparkles.</p>
+
+<h2>The timing thing nobody says</h2>
+<p>The effect must start on <em>press</em>, not on the server response. If your burst waits for a network round trip it reads as lag, and you have made the game feel slower by adding an effect meant to make it feel better. Fire the feedback immediately, reconcile the result afterwards.</p>
+
+<h2>Why UI particles are technically fiddly</h2>
+<p>They live in screen space, over a 2D scene graph, at UI scale, and usually in a different renderer context than your world effects. That mismatch is why UI juice often gets hand-rolled per game and then never touched again. Having the same authoring pipeline target both a 2D and a 3D backend is what makes it maintainable.</p>
+
+<p><a href="https://nixiefx.com/pixijs-particle-effects/">This tutorial wiring effects to PixiJS v8 UI</a> walks the press-burst and coin-fountain cases end to end, which are exactly the two worth building first.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>

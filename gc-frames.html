@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The frame you dropped was the garbage collector</title>
+<meta name="description" content="Web games rarely stutter because the GPU is slow. They stutter because something allocated in a hot path. A budget discipline.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>The frame you dropped was the garbage collector</h1>
+<p class="lede">When a web game hitches, the instinct is to blame the GPU. In my experience it is almost never the GPU.</p>
+
+<p>Profile a stuttering HTML5 game on an actual phone and the pattern is usually the same: frame times are fine, fine, fine, then one frame takes 40ms, then fine again. That is not a rendering cost. Rendering costs are boring and consistent. That is a collection pause, and something in your per-frame path is producing garbage.</p>
+
+<h2>The rule that actually works</h2>
+<p>Treat allocation inside a hot path as a correctness bug rather than an optimisation you will get to later. Not because allocation is expensive &mdash; individually it is cheap &mdash; but because the cost is deferred, batched, and lands at a moment you do not control. A bug that manifests at a random later time is exactly the kind you want to prevent structurally rather than fix reactively.</p>
+
+<p>Concretely, in anything that runs every frame:</p>
+<ul>
+<li><strong>Indexed loops, not <code>.map</code> / <code>.filter</code> / spread.</strong> Each of those returns a fresh array. Sixty times a second, per system.</li>
+<li><strong>Caller-owned buffers.</strong> Have the caller pass in the array or vector to write into, rather than returning a new one. Uglier signature, flat memory graph.</li>
+<li><strong>Scratch objects at module scope.</strong> One reused temp vector beats a new one per particle per frame, and the diff is usually four lines.</li>
+<li><strong>Bounded pools for bursty things.</strong> Prewarm them. A pool that grows during the burst you built it for is not a pool.</li>
+<li><strong>Update retained objects, do not recreate them.</strong> This is the one people miss with renderer objects specifically.</li>
+</ul>
+
+<h2>Where particles bite hardest</h2>
+<p>Particle systems are the worst offender because they are the one system that is simultaneously per-frame, high-count, and written by whoever needed an explosion that afternoon. A thousand particles times a fresh vector each is a million objects a minute, and it will look completely fine on the desktop you built it on.</p>
+
+<p>Which is the other half of the discipline: profile on a real mid-range phone, not on your laptop with the tab focused. Desktop headroom hides every one of these until a player finds it.</p>
+
+<h2>The dishonest fix</h2>
+<p>The tempting response to a measured stutter is to quietly reduce the effect &mdash; fewer particles, shorter lifetime &mdash; until the number goes green. That is not a fix, it is deleting the feature and keeping the metric. Find what allocated. It is nearly always one line.</p>
+
+<p><a href="https://nixiefx.com/html5-game-performance/">This write-up on holding 60fps on the mobile web</a> is the most complete version of this discipline I have found, including the parts about atlases and device pixel ratio that I skipped here.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>

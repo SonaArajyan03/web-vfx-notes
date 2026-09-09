@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Who authors the effect matters more than which tool</title>
+<meta name="description" content="The bottleneck in game VFX is usually one person's queue. Widening it changes what you can ship.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>Who authors the effect matters more than which tool</h1>
+<p class="lede">Most teams do not have a VFX quality problem. They have a VFX access problem.</p>
+
+<p>Ask a small studio why a screen feels flat and the answer is rarely that nobody knows how to make it good. It is that the one person who can make effects is on something else until Thursday, so the screen ships flat and gets revisited never.</p>
+
+<p>That is a queue, not a craft problem, and it responds to completely different interventions.</p>
+
+<h2>Three ways the queue stays narrow</h2>
+<ul>
+<li><strong>Authoring requires code.</strong> If making a spark means editing a shader or a config in a source file, only engineers make sparks. Your designers and artists have the taste and cannot reach the work.</li>
+<li><strong>Authoring requires the whole project running.</strong> If you have to build and boot the game to see an effect, iteration cost is measured in minutes and only someone with the project already running will bother.</li>
+<li><strong>Nobody can review it.</strong> Even when someone else authors an effect, if the result cannot be checked without a meeting, the expert gets pulled back in and the queue reforms around them.</li>
+</ul>
+
+<h2>What widening it actually looks like</h2>
+<p>A browser-based editor is the unglamorous answer to the first two. No install, no project setup, immediate preview &mdash; which means an artist can iterate on a burst during a coffee break and hand over a finished file. Whether the underlying engine is state of the art matters much less than whether a second person can open it.</p>
+
+<p>The third needs the file format to be reviewable, which is a separate decision and the one people skip. An accessible editor writing an unreviewable blob just moves the bottleneck from authoring to approval.</p>
+
+<h2>The agent case, briefly</h2>
+<p>There is now a fourth author worth counting: a coding agent, supervised by whoever wanted the effect. It is good at the mechanical parts &mdash; scaffolding a variant, batch-adjusting timings, validating a project &mdash; and useless at deciding whether the result looks right, which is precisely the split you want. It needs the same things a human collaborator needs: a documented schema, plain files, and a validator that fails loudly.</p>
+
+<p>All of which is to say the editor and the file format are the same decision. <a href="https://nixiefx.com/editor/">A free browser-based editor</a> that writes plain JSON into your own project folder is the shape that widens the queue at both ends.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>
