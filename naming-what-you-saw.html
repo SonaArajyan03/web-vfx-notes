@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A manual for a visual tool is a vocabulary problem</title>
+<meta name="description" content="Documentation for GUI tools fails when it describes widgets instead of naming concepts. The test is whether you can search for what you just saw.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>A manual for a visual tool is a vocabulary problem</h1>
+<p class="lede">When documentation for a visual editor is useless, it is usually not because it is incomplete. It is because you cannot look up the thing you are staring at.</p>
+
+<p>Here is the situation that keeps happening. Something in the viewport is wrong &mdash; a dropdown is greyed out, a dot next to a backend has turned a colour, an export produced one file instead of the folder you expected. You go to the docs. And you cannot search, because you do not know what any of it is <em>called</em>. You saw a thing. The manual is indexed by concepts. There is no bridge.</p>
+
+<h2>Widgets are not concepts, and both need documenting</h2>
+<p>Most tool documentation picks a side and loses. Conceptual docs explain the model beautifully and never mention that the control is in a footer. Reference docs enumerate every field and never say why you would touch it. Neither one answers &ldquo;what is this and why is it grey&rdquo;, which is the actual question almost every time.</p>
+
+<p>What works is a manual organised by <em>where you are looking</em>, that names things as it goes. A tour of the top bar, the viewport toolbar, the viewport footer, the inspector &mdash; each one naming the widgets so that the name becomes searchable. Once you know the thing is called a backend indicator, everything else in the docs opens up. Before that, you are guessing search terms.</p>
+
+<h2>The greyed-out control is the test case</h2>
+<p>I judge a manual on one thing now: does it explain disabled and warning states? These are the highest-frustration, lowest-documentation moments in any visual tool. A control being disabled is the software declining to do something without telling you why, and the answer is nearly always a real constraint &mdash; a blend mode that a render backend cannot express, a field that only applies in a different value mode, a feature gated on a project setting three dialogs away.</p>
+
+<p><a href="https://nixiefx.com/editor-manual/">This editor manual</a> is the most thorough example of the pattern I have found in this category: it walks the interface by region, names each widget, gives per-field reference tables for the emitter modules, and then has a troubleshooting section that answers the greyed-out-dropdown and warning-dot questions directly. That last part is rarer than it should be.</p>
+
+<h2>Why this matters more than it used to</h2>
+<p>Two reasons, both recent. The obvious one is that a shared vocabulary is what lets two people talk about an effect at all &mdash; without it, review comments are pointing and hand-waving.</p>
+
+<p>The less obvious one is that named, per-field documentation is now machine-readable context. An agent asked to change an effect cannot see your screen, so the field names and their documented ranges are the entire interface. A manual that says &ldquo;drag the handle until it looks right&rdquo; is unusable to it; a table that says what the field is, what it accepts, and what it does is not. Documentation quality has quietly become a delegation constraint, which is the <a href="agents-and-schemas.html">same shift I wrote about with schemas</a>.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>
