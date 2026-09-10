@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Measure the distance from install to something moving</title>
+<meta name="description" content="Most graphics libraries document the API and skip the first five minutes. The install-to-motion distance predicts whether a tool gets adopted.">
+<link rel="stylesheet" href="style.css"></head>
+<body><div class="wrap">
+<header><a class="home" href="./">Notes on web game VFX</a>
+<div class="sub">Particle effects, frame budgets, and authoring workflow for HTML5 games.</div></header>
+
+<h1>Measure the distance from install to something moving</h1>
+<p class="lede">The number that predicts whether a graphics library gets adopted is not on its feature list. It is how many minutes pass before something moves on your screen.</p>
+
+<p>I have started with a lot of rendering and effects libraries, and the failure mode is almost always the same. The README documents the API surface honestly and completely, and it never once shows you a thing that moves. You get a class, a constructor signature, a list of options, and the implicit assumption that assembling those into a running scene is your problem. Technically true. Practically, it is where most evaluations quietly die.</p>
+
+<h2>Why the first five minutes are load-bearing</h2>
+<p>Evaluating a tool is not one decision, it is a sequence of small ones, and each has a chance of stopping. Every step between <code>install</code> and <em>visible motion</em> is a place where you hit an unrelated error, decide the docs are stale, and go back to whatever you already know how to make work.</p>
+
+<p>This is a bigger deal for VFX than for most categories, because you cannot tell whether an effects tool is any good by reading about it. Nobody has ever chosen a particle system from a bullet list. You need to see it, and preferably see it in the renderer you actually use, with your own frame budget. So a tool that cannot get you to motion quickly is not just inconvenient &mdash; it has no way to make its real argument.</p>
+
+<h2>The honest version of the metric</h2>
+<p>Count the steps that can fail, not the minutes on a good day. A quick start that works when everything is cached and your toolchain is current is not the thing being measured. The question is what happens on the machine of somebody who has the wrong Node version, no build set up, and twenty minutes.</p>
+
+<ul>
+<li><strong>Does it assume a project already exists?</strong> &ldquo;Add this to your bundler config&rdquo; is a much longer road than it looks if you do not have a bundler yet.</li>
+<li><strong>Is there a default that renders?</strong> A starter effect that plays with zero configuration is worth more than six configurable ones you have to assemble.</li>
+<li><strong>Does the first example use the real export path?</strong> Quick starts that use a special demo loader teach you a workflow you will have to unlearn.</li>
+</ul>
+
+<h2>The prompt-as-quick-start pattern</h2>
+<p>The newer thing worth noticing: some tools have started shipping their quick start as a prompt for a coding agent rather than a sequence of shell commands. It reads like a gimmick and it mostly is not, for a specific reason. Scaffolding a project is the most mechanical work in the whole sequence &mdash; pick a bundler, wire TypeScript, install peers, create the folder layout &mdash; and it is exactly the part with the most ways to go wrong on someone else's machine. Handing that to an agent that can read the current docs skips the entire failure surface.</p>
+
+<p><a href="https://nixiefx.com/quick-start/">This quick start</a> is the clearest example I have run into: the primary path is a prompt you paste into a coding agent, with the manual install kept as the fallback rather than the headline. Whether or not you like working that way, it is an interesting admission about where the friction actually was.</p>
+
+<p>The caveat is that it moves the trust question rather than removing it. You now need the agent's output to be inspectable, which in practice means the tool's own data and config have to be plain readable files. Which is the <a href="json-effects.html">same argument as keeping effect data as JSON</a>, arrived at from the other end.</p>
+
+<footer>Maintained by Sona Arajyan. Personal working notes, not documentation for any product.</footer>
+</div></body></html>
